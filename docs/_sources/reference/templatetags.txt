@@ -2,8 +2,8 @@
 Template Tags and Filters
 =========================
 
-
-
+.. contents::
+   :local:
 
 add_qs_param
 ============
@@ -56,3 +56,36 @@ generates::
 generates::
 
     http://example.com/?q=1#gohere
+
+add_fragment
+============
+
+**Usage:** ``{{ url|add_fragment:variable }}`` or ``{{ url|add_fragment:"fragment" }}``
+
+This tag intelligently adds or replaces the URL fragment. You can pass a variable as the parameter to ``add_fragment`` or a static value. You must quote static values.
+
+Example
+-------
+
+.. code-block:: django
+
+    {{ url|add_fragment:"gohere" }}
+
+generates::
+
+    http://example.com/#gohere
+
+
+absurl
+======
+
+Just like Django's `url tag`_ but adds the domain of the current site.
+
+.. _url tag: https://docs.djangoproject.com/en/1.4/ref/templates/builtins/#url
+
+link
+====
+
+**Usage:** ``{{ object|link }}``
+
+Outputs the object in a anchor tag which is the equivalent of ``<a href="{{ object.get_absolute_url }}">{{ object }}</a>``

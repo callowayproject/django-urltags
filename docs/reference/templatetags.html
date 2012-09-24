@@ -83,13 +83,27 @@
             
   <div class="section" id="template-tags-and-filters">
 <h1>Template Tags and Filters<a class="headerlink" href="#template-tags-and-filters" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#add-qs-param" id="id1">add_qs_param</a><ul>
+<li><a class="reference internal" href="#examples" id="id2">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#add-fragment" id="id3">add_fragment</a><ul>
+<li><a class="reference internal" href="#example" id="id4">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#absurl" id="id5">absurl</a></li>
+<li><a class="reference internal" href="#link" id="id6">link</a></li>
+</ul>
+</div>
 <div class="section" id="add-qs-param">
-<h2>add_qs_param<a class="headerlink" href="#add-qs-param" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id1">add_qs_param</a><a class="headerlink" href="#add-qs-param" title="Permalink to this headline">¶</a></h2>
 <p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">add_qs_param</span> <span class="pre">url</span> <span class="pre">varname</span> <span class="pre">value</span> <span class="pre">%}</span></tt></p>
 <p>This tag intelligently adds or replaces the query string parameter <tt class="docutils literal"><span class="pre">varname</span></tt> and assigns it <tt class="docutils literal"><span class="pre">value</span></tt>.</p>
 <p><tt class="docutils literal"><span class="pre">url</span></tt>, <tt class="docutils literal"><span class="pre">varname</span></tt>, and <tt class="docutils literal"><span class="pre">value</span></tt> can be static values or variables</p>
 <div class="section" id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id2">Examples</a><a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
 <p><strong>Adding a single query string parameter</strong></p>
 <div class="highlight-django"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">add_qs_param</span> <span class="nv">http</span><span class="o">://</span><span class="nv">example.com</span><span class="o">/</span> <span class="nv">q</span> <span class="m">1</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
@@ -119,6 +133,29 @@
 <div class="highlight-python"><pre>http://example.com/?q=1#gohere</pre>
 </div>
 </div>
+</div>
+<div class="section" id="add-fragment">
+<h2><a class="toc-backref" href="#id3">add_fragment</a><a class="headerlink" href="#add-fragment" title="Permalink to this headline">¶</a></h2>
+<p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">url|add_fragment:variable</span> <span class="pre">}}</span></tt> or <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">url|add_fragment:&quot;fragment&quot;</span> <span class="pre">}}</span></tt></p>
+<p>This tag intelligently adds or replaces the URL fragment. You can pass a variable as the parameter to <tt class="docutils literal"><span class="pre">add_fragment</span></tt> or a static value. You must quote static values.</p>
+<div class="section" id="example">
+<h3><a class="toc-backref" href="#id4">Example</a><a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-django"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">url</span><span class="o">|</span><span class="nf">add_fragment</span><span class="s2">:&quot;gohere&quot;</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>generates:</p>
+<div class="highlight-python"><pre>http://example.com/#gohere</pre>
+</div>
+</div>
+</div>
+<div class="section" id="absurl">
+<h2><a class="toc-backref" href="#id5">absurl</a><a class="headerlink" href="#absurl" title="Permalink to this headline">¶</a></h2>
+<p>Just like Django&#8217;s <a class="reference external" href="https://docs.djangoproject.com/en/1.4/ref/templates/builtins/#url">url tag</a> but adds the domain of the current site.</p>
+</div>
+<div class="section" id="link">
+<h2><a class="toc-backref" href="#id6">link</a><a class="headerlink" href="#link" title="Permalink to this headline">¶</a></h2>
+<p><strong>Usage:</strong> <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">object|link</span> <span class="pre">}}</span></tt></p>
+<p>Outputs the object in a anchor tag which is the equivalent of <tt class="docutils literal"><span class="pre">&lt;a</span> <span class="pre">href=&quot;{{</span> <span class="pre">object.get_absolute_url</span> <span class="pre">}}&quot;&gt;{{</span> <span class="pre">object</span> <span class="pre">}}&lt;/a&gt;</span></tt></p>
 </div>
 </div>
 

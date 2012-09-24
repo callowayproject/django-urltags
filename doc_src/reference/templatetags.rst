@@ -2,8 +2,8 @@
 Template Tags and Filters
 =========================
 
-
-
+.. contents::
+   :local:
 
 add_qs_param
 ============
@@ -69,7 +69,7 @@ Example
 
 .. code-block:: django
 
-    {{ url|add_fragment:"gohere"}}
+    {{ url|add_fragment:"gohere" }}
 
 generates::
 
@@ -79,11 +79,13 @@ generates::
 absurl
 ======
 
-Just like ``{% url %}`` but ads the domain of the current site.
+Just like Django's `url tag`_ but adds the domain of the current site.
+
+.. _url tag: https://docs.djangoproject.com/en/1.4/ref/templates/builtins/#url
 
 link
 ====
 
-``{{ object|link }}``
+**Usage:** ``{{ object|link }}``
 
-``<a href="{{ object.get_absolute_url }}">{{ object }}</a>``
+Outputs the object in a anchor tag which is the equivalent of ``<a href="{{ object.get_absolute_url }}">{{ object }}</a>``
