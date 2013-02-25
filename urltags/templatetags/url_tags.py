@@ -28,7 +28,10 @@ class AddParameter(Node):
         self.value = Variable(value)
 
     def render(self, context):
-        url_parts = urlparse.urlparse(smart_resolve(self.url, context))
+        the_url = smart_resolve(self.url, context)
+        if the_url is None:
+            return ''
+        url_parts = urlparse.urlparse(the_url)
         varname = smart_resolve(self.varname, context)
         value = smart_resolve(self.value, context)
         params = urlparse.parse_qs(url_parts.query)
