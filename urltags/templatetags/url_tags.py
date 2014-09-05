@@ -22,20 +22,25 @@ def smart_resolve(variable, context):
 
 
 class AddParameter(Node):
-    def __init__(self, url, varname, value):
+    def __init__(self, url, params):
         self.url = Variable(url)
-        self.varname = Variable(varname)
-        self.value = Variable(value)
+        self.params = [Variable(x) for x in params]
 
     def render(self, context):
         the_url = smart_resolve(self.url, context)
         if the_url is None:
             return ''
         url_parts = urlparse.urlparse(the_url)
-        varname = smart_resolve(self.varname, context)
-        value = smart_resolve(self.value, context)
+        qs_params = []
+        for i in range(0, len(self.params), 2):
+            varname = smart_resolve(self.params[i], context)
+            value = smart_resolve(self.params[i + 1], context)
+            qs_params.append((varname, value))
+
         params = urlparse.parse_qs(url_parts.query)
-        params[varname] = value
+        for varname, value in qs_params:
+            params[varname] = value
+
         querystring = urllib.urlencode(params, doseq=True)
         return urlparse.urlunparse(url_parts[:4] + (querystring, ) + url_parts[5:])
 
@@ -45,7 +50,7 @@ def add_qs_param(parser, token):
     """
     Called as
 
-    {% add_qs_param url var val %}
+    {% add_qs_param url var val [var val ...] %}
 
     And adds ?var=val to the end of url, or &var=val if querystring already
     exists.
@@ -53,7 +58,9 @@ def add_qs_param(parser, token):
     bits = token.split_contents()
     if len(bits) < 4:
         raise TemplateSyntaxError("'%s' tag requires a url, variable name and a value arguments" % bits[0])
-    return AddParameter(bits[1], bits[2], bits[3])
+    if len(bits) % 2 != 0:
+        raise TemplateSyntaxError("'%s' tag requires an equal number of variable names and value arguments" % bits[0])
+    return AddParameter(bits[1], bits[2:])
 
 
 @register.filter
